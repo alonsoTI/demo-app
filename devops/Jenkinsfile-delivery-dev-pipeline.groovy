@@ -75,11 +75,9 @@ try {
             [$class: "StringBinding", credentialsId: "${demo-inct-webapp-tenant}", variable: "tenantId" ]
           ]){
             try{
-
               steps.echo """
                 ******** LOGIN WEBAPP APP ********
               """
-
               steps.sh "az login --service-principal --username ${script.env.webappId} --password ${script.env.webappPassword} --tenant ${script.env.tenantId}"
 
 
@@ -92,7 +90,6 @@ try {
                 ******** DEPLOY CONTAINER ON AZURE WEBAPP ********
               """
               steps.sh "az webapp restart -g ${AzureResourceName} -n ${azureWebApp}"
-
             }catch(Exception e){
               throw e;
             }
