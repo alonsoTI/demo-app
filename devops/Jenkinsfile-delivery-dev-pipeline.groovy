@@ -84,13 +84,13 @@ try {
               steps.echo """
                 ******** LOGIN WEBAPP APP ********
               """
-              steps.sh "az login --service-principal --username ${script.env.webappId} --password ${script.env.webappPassword} --tenant ${script.env.tenantId}"
+              steps.sh "az login --service-principal --username ${env.webappId} --password ${env.webappPassword} --tenant ${env.tenantId}"
 
 
               steps.echo """
                 ******** CONFIGURING WEBAPP CONTAINER SETTINGS ********
               """
-              steps.sh "az webapp config container set -n ${azureWebApp} -g ${AzureResourceName} -c ${imageTag} -r ${dockerRegistryUrl} -u ${script.env.pullId} -p ${script.env.pullPassword}"
+              steps.sh "az webapp config container set -n ${azureWebApp} -g ${AzureResourceName} -c ${imageTag} -r ${dockerRegistryUrl} -u ${env.pullId} -p ${env.pullPassword}"
 
               steps.echo """
                 ******** DEPLOY CONTAINER ON AZURE WEBAPP ********
@@ -102,12 +102,10 @@ try {
           }
       }
 
-      stage('Results') {
-         utils.saveResultNode("tgz")
-      }
-
       stage('Post Execution') {
-         
+         steps.echo """
+                URL DEPLOY : http://demo-app-inct.azurewebsites.net/app/  ********
+        """
       }
    }
 } catch(Exception e) {
