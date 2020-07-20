@@ -55,8 +55,8 @@ try {
       * Docker logout
     */
     steps.withCredentials([
-      [$class: "StringBinding", credentialsId: "${pushId}", variable: "pushId" ],
-      [$class: "StringBinding", credentialsId: "${pushPassword}", variable: "pushPassword" ]
+      [$class: "StringBinding", credentialsId: "pushId", variable: "pushId" ],
+      [$class: "StringBinding", credentialsId: "pushPassword", variable: "pushPassword" ]
     ]){
       try{
         //Inicio de sesión en acr
@@ -74,11 +74,11 @@ try {
     }
   
     steps.withCredentials([
-            [$class: "StringBinding", credentialsId: "${pullId}", variable: "pullId" ],
-            [$class: "StringBinding", credentialsId: "${pullPassword}", variable: "pullPassword" ],
-            [$class: "StringBinding", credentialsId: "${webappId}", variable: "webappId" ],
-            [$class: "StringBinding", credentialsId: "${webappPassword}", variable: "webappPassword" ],
-            [$class: "StringBinding", credentialsId: "${tenantId}", variable: "tenantId" ]
+            [$class: "StringBinding", credentialsId: "pullId", variable: "pullId" ],
+            [$class: "StringBinding", credentialsId: "pullPassword", variable: "pullPassword" ],
+            [$class: "StringBinding", credentialsId: "webappId", variable: "webappId" ],
+            [$class: "StringBinding", credentialsId: "webappPassword", variable: "webappPassword" ],
+            [$class: "StringBinding", credentialsId: "tenantId", variable: "tenantId" ]
           ]){
             try{
               steps.echo """
