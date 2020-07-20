@@ -104,7 +104,7 @@ try {
 
       stage('Post Execution') {
          steps.echo """
-                URL DEPLOY : http://demo-app-inct.azurewebsites.net/app/  ********
+                URL DEPLOY : http://demo-app-inct.azurewebsites.net/web/  ********
         """
       }
    }
