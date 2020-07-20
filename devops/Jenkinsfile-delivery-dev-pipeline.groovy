@@ -16,7 +16,12 @@ def imageTag                = "${dockerRegistryUrl}/${appName}:${appVersion}";
 try {
    node { 
       stage('Preparation') {
-        
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
+        doGenerateSubmoduleConfigurations: false, 
+        extensions: [], 
+        submoduleCfg: [], 
+        userRemoteConfigs: [[credentialsId: 'github-jenkins', 
+        url: 'https://github.com/alonsoTI/demo-app.git']]])
       }
 
       stage('Build & UT') {
