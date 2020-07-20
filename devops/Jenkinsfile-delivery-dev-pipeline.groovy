@@ -7,6 +7,8 @@ def AzureResourceName       = "prueba";
 def azureWebApp             = "demo-app-inct";
 def dockerRegistryUrl       = "vlliuyadesa.azurecr.io";
 def imageTag                = "${dockerRegistryUrl}/${appName}:${appVersion}";
+def pushId                  = "${demo-acr-push-sp-id}";
+def pushPassword            = "${demo-acr-push-sp-password}";
 
 /* Mail configuration*/
 // If recipients is null the mail is sent to the person who start the job
@@ -54,8 +56,8 @@ try {
       * Docker logout
     */
     steps.withCredentials([
-      [$class: "StringBinding", credentialsId: "${demo-acr-push-sp-id}", variable: "pushId" ],
-      [$class: "StringBinding", credentialsId: "${demo-acr-push-sp-password}", variable: "pushPassword" ]
+      [$class: "StringBinding", credentialsId: "${pushId}", variable: "pushId" ],
+      [$class: "StringBinding", credentialsId: "${pushPassword}", variable: "pushPassword" ]
     ]){
       try{
         //Inicio de sesión en acr
