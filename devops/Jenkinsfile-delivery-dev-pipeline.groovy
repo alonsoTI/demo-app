@@ -7,8 +7,7 @@ def AzureResourceName       = "prueba";
 def azureWebApp             = "demo-app-inct";
 def dockerRegistryUrl       = "vlliuyadesa.azurecr.io";
 def imageTag                = "${dockerRegistryUrl}/${appName}:${appVersion}";
-def pushId                  = "${demo-acr-push-sp-id}";
-def pushPassword            = "${demo-acr-push-sp-password}";
+
 
 /* Mail configuration*/
 // If recipients is null the mail is sent to the person who start the job
@@ -75,11 +74,11 @@ try {
     }
   
     steps.withCredentials([
-            [$class: "StringBinding", credentialsId: "${demo-acr-pull-sp-id}", variable: "pullId" ],
-            [$class: "StringBinding", credentialsId: "${demo-acr-pull-sp-password}", variable: "pullPassword" ],
-            [$class: "StringBinding", credentialsId: "${demo-inct-webapp-id}", variable: "webappId" ],
-            [$class: "StringBinding", credentialsId: "${demo-inct-webapp-password}", variable: "webappPassword" ],
-            [$class: "StringBinding", credentialsId: "${demo-inct-webapp-tenant}", variable: "tenantId" ]
+            [$class: "StringBinding", credentialsId: "${pullId}", variable: "pullId" ],
+            [$class: "StringBinding", credentialsId: "${pullPassword}", variable: "pullPassword" ],
+            [$class: "StringBinding", credentialsId: "${webappId}", variable: "webappId" ],
+            [$class: "StringBinding", credentialsId: "${webappPassword}", variable: "webappPassword" ],
+            [$class: "StringBinding", credentialsId: "${tenantId}", variable: "tenantId" ]
           ]){
             try{
               steps.echo """
