@@ -62,7 +62,7 @@ try {
         //Inicio de sesión en acr
         steps.sh """
           set +x
-          docker login ${dockerRegistryUrl} --username ${script.env.pushId} --password ${script.env.pushPassword}  
+          docker login ${dockerRegistryUrl} --username ${env.pushId} --password ${env.pushPassword}  
         """
         steps.sh "docker push ${imageTag}" //Subo imagen
         steps.sh "docker logout ${dockerRegistryUrl}" //Cierro sesión del acr
