@@ -1,13 +1,14 @@
 /* Project 4 letters. */ 
 def project                 = 'BMDL'
 def deploymentEnvironment   = 'dev'
-def appName                 = "demo";
-def appVersion              = "1.3";
+def appName                 = "databricks-cli";
+def appVersion              = "1.0";
 def AzureResourceName       = "prueba";
 def azureWebApp             = "demo-app-inct";
 def dockerRegistryUrl       = "vlliuyadesa.azurecr.io";
 def imageTag                = "${dockerRegistryUrl}/${appName}:${appVersion}";
-
+def databricksHost          = "https://eastus2.azuredatabricks.net";
+def databricksContainer     = "";
 
 /* Mail configuration*/
 // If recipients is null the mail is sent to the person who start the job
@@ -78,9 +79,12 @@ try {
             [$class: "StringBinding", credentialsId: "pullPassword", variable: "pullPassword" ],
             [$class: "StringBinding", credentialsId: "webappId", variable: "webappId" ],
             [$class: "StringBinding", credentialsId: "webappPassword", variable: "webappPassword" ],
-            [$class: "StringBinding", credentialsId: "tenantId", variable: "tenantId" ]
+            [$class: "StringBinding", credentialsId: "tenantId", variable: "tenantId" ],
+            [$class: "StringBinding", credentialsId: "	databricksToken", variable: "	databricksToken" ]
           ]){
             try{
+              
+              /*
               steps.echo """
                 ******** LOGIN WEBAPP APP ********
               """
@@ -96,6 +100,10 @@ try {
                 ******** DEPLOY CONTAINER ON AZURE WEBAPP ********
               """
               steps.sh "az webapp restart -g ${AzureResourceName} -n ${azureWebApp}"
+              */
+              databricksContainer = steps.sh(script:"docker run -d -it ${imageTag}",returnStdout:true).trim();
+              steps.sh "docker exec ${databricksContainer} -e ${databricksHost} -${env.databricksToken} jobs list";
+
             }catch(Exception e){
               throw e;
             }
