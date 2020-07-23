@@ -30,7 +30,7 @@ try {
         steps.echo """
         ******** BUILDING DOCKER IMAGE ********
         """
-        steps.sh "docker build -t ${imageTag} ."
+        //steps.sh "docker build -t ${imageTag} ."
       }
 
       stage('QA Analisys') {
@@ -61,14 +61,16 @@ try {
     ]){
       try{
         //Inicio de sesión en acr
+        
         steps.sh """
           set +x
           docker login ${dockerRegistryUrl} --username ${env.pushId} --password ${env.pushPassword}  
         """
+        /*
         steps.sh "docker push ${imageTag}" //Subo imagen
         steps.sh "docker logout ${dockerRegistryUrl}" //Cierro sesión del acr
         steps.sh "docker rmi ${imageTag}" //Elimino la imagen creada
-
+        */
       }catch(Exception e){
         throw e;
       }
