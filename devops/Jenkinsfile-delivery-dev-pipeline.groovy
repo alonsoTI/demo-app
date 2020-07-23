@@ -82,7 +82,7 @@ try {
             [$class: "StringBinding", credentialsId: "webappId", variable: "webappId" ],
             [$class: "StringBinding", credentialsId: "webappPassword", variable: "webappPassword" ],
             [$class: "StringBinding", credentialsId: "tenantId", variable: "tenantId" ],
-            [$class: "StringBinding", credentialsId: "	databricksToken", variable: "	databricksToken" ]
+            [$class: "StringBinding", credentialsId: "databricksToken", variable: "	databricksToken" ]
           ]){
             try{
               
