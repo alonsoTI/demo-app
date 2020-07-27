@@ -66,11 +66,11 @@ try {
           set +x
           docker login ${dockerRegistryUrl} --username ${env.pushId} --password ${env.pushPassword}  
         """
-        /*
+        
         steps.sh "docker push ${imageTag}" //Subo imagen
         steps.sh "docker logout ${dockerRegistryUrl}" //Cierro sesión del acr
-        steps.sh "docker rmi ${imageTag}" //Elimino la imagen creada
-        */
+        //steps.sh "docker rmi ${imageTag}" //Elimino la imagen creada
+        
       }catch(Exception e){
         throw e;
       }
@@ -105,7 +105,13 @@ try {
               */
               databricksContainer = steps.sh(script:"docker run -d -it -v ${env.WORKSPACE}:/tmp/databricks -e DATABRICKS_HOST=${databricksHost} -e DATABRICKS_TOKEN=${env.databricksToken} ${imageTag}",returnStdout:true).trim();
               steps.sh "docker exec ${databricksContainer} databricks jobs list";
+              steps.sh "docker exec ${databricksContainer} dbfs cp dependencias/job-2020.json dbfs:/"
 
+              steps.echo """
+                ******** STOP AND DELETE CONTAINER ********
+              """
+              steps.sh "docker stop ${databricksContainer}"
+              steps.sh "docker rm ${databricksContainer}"
             }catch(Exception e){
               throw e;
             }
