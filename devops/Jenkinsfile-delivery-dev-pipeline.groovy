@@ -103,7 +103,7 @@ try {
               """
               steps.sh "az webapp restart -g ${AzureResourceName} -n ${azureWebApp}"
               */
-              databricksContainer = steps.sh(script:"docker run -d -it -v $env.WORSPACE:/tmp/databricks -e DATABRICKS_HOST=${databricksHost} -e DATABRICKS_TOKEN=${env.databricksToken} ${imageTag}",returnStdout:true).trim();
+              databricksContainer = steps.sh(script:"docker run -d -it -v ${env.WORSPACE}:/tmp/databricks -e DATABRICKS_HOST=${databricksHost} -e DATABRICKS_TOKEN=${env.databricksToken} ${imageTag}",returnStdout:true).trim();
               steps.sh "docker exec ${databricksContainer} databricks jobs list";
 
             }catch(Exception e){
