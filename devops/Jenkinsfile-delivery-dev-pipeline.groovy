@@ -2,7 +2,7 @@
 def project                 = 'BMDL'
 def deploymentEnvironment   = 'dev'
 def appName                 = "databricks-cli";
-def appVersion              = "1.0";
+def appVersion              = "2.0";
 def AzureResourceName       = "prueba";
 def azureWebApp             = "demo-app-inct";
 def dockerRegistryUrl       = "vlliuyadesa.azurecr.io";
@@ -30,7 +30,7 @@ try {
         steps.echo """
         ******** BUILDING DOCKER IMAGE ********
         """
-        //steps.sh "docker build -t ${imageTag} ."
+        steps.sh "docker build -t ${imageTag} ."
       }
 
       stage('QA Analisys') {
@@ -103,7 +103,7 @@ try {
               """
               steps.sh "az webapp restart -g ${AzureResourceName} -n ${azureWebApp}"
               */
-              databricksContainer = steps.sh(script:"docker run -d -it -e DATABRICKS_HOST=${databricksHost} -e DATABRICKS_TOKEN=${env.databricksToken} ${imageTag}",returnStdout:true).trim();
+              databricksContainer = steps.sh(script:"docker run -d -it -v $env.WORSPACE:/tmp/databricks -e DATABRICKS_HOST=${databricksHost} -e DATABRICKS_TOKEN=${env.databricksToken} ${imageTag}",returnStdout:true).trim();
               steps.sh "docker exec ${databricksContainer} databricks jobs list";
 
             }catch(Exception e){
